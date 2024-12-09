@@ -1,4 +1,6 @@
-# Quantitative Research Data Cleaning Documentation
+## QUANTITATIVE RESEARCH
+## DATA COLLECTION, EXPLORATION AND CLEANING
+## PYTHON PROGRAMMING LANGUAGE
 
 ## 1. INTRODUCTION
 
@@ -28,7 +30,7 @@ Addressing these challenges is critical for ensuring data-driven decisions are b
 
 ## 4. MAIN OBJECTIVE
 
-To develop and implement automated methods for detecting, visualizing, and treating null values and outliers, ensuring the integrity of quantitative datasets and enhancing research outcomes.
+The main objective is to **develop and implement automated methods** for detecting, visualizing, and treating null values and outliers, ensuring the integrity of quantitative datasets and enhancing research outcomes.
 
 ## 5. METHODOLOGY
 
@@ -57,9 +59,9 @@ To develop and implement automated methods for detecting, visualizing, and treat
 
 ### 5.3 Tools and Technologies
 
-- **Programming Languages**: Python, R
+- **Programming Languages**: Python
 - **Libraries**: Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn
-- **Statistical Techniques**: Z-score, IQR, Missing Data Heatmaps
+- **Statistical Techniques**: Z-score, IQR, Missing Data Heatmaps, Simple Imputer
 
 ### 5.4 Implementation Steps
 
@@ -75,14 +77,14 @@ This project addresses critical issues in quantitative data analysis by providin
 
 # SECTION A:
 
-## NULL VALUES / COLUMNS DETECTION AND TREATMENT TECHNIQUES
+## 1. NULL VALUES DETECTION AND TREATMENT TECHNIQUES
 
 - Loading Dataset
 - Finding Frequency of Clean and Null Values
 - Visualizing Null Values with Graphs and Tables
 - Null Value Treatment Strategies
 
-
+**1.1 Importing Libraries**
 ```python 
 import pandas as pd
 import plotly.graph_objects as go
@@ -93,8 +95,8 @@ from sklearn.ensemble import IsolationForest
 import plotly.express as px
 from sklearn.impute import SimpleImputer
 ```
-### 1. NULL VALUES/COLUMNS DETECTION AND TREATMENT
-```Load dataset```
+**1.2 loading dataset**
+
 ```python 
 df = pd.read_csv('datasets2.csv')
 df.tail()
@@ -107,22 +109,20 @@ df.tail()
 | 998  | Salif     | 0.0   | Iringa         |
 | 999  | Adama     | 90.0  | Kagera         |
 
-
-**1.2 FREQUENCY / PERCENT OF CLEAN AND NULL VALUES**
-
-_Calculate null counts and clean data counts_
+**1.3 Calculate null counts and clean data counts by frequency and Percentage**
 
 ```python
 null_counts = df['age'].isnull().sum()
 clean_data_counts = df['age'].notnull().sum()
 ```
-_Calculate percentages_
+**1.4 Calculate percentages**
+
 ```python
 total_count = len(df)
 percent_null = (null_counts / total_count) * 100
 percent_clean = (clean_data_counts / total_count) * 100
 ```
-_Create a DataFrame for visualization_
+**1.5 Create a DataFrame for visualization**
 
 ```python
 data = {
@@ -140,7 +140,7 @@ print(df_visualize)
 | Clean | 958   | 95.8       |
 
 
-_create bar graph to visualize null_
+**1.6 create bar graph to visualize nulls**
 
 ```python
 # Create a bar plot figure
@@ -162,7 +162,7 @@ fig.show()
 ```
 ![1](https://github.com/user-attachments/assets/ca6fab34-db28-4022-ac53-195b5078697e)
 
-_visualize null field ( age ) by table_
+**1.7 visualize null field ( age ) by table**
 
 ```python
 # Before imputation (if there were missing values)
@@ -183,7 +183,7 @@ print(df[df['age'].isnull()])
 | Achieng   | NaN   | Zanzibar Central/South   |
 | Salif     | NaN   | Songwe                   |
 
-_null values treatment strategies_
+**1.8 ull values treatment strategies**
 ```python
 # Apply imputation
 imputer = SimpleImputer(strategy='mean')
@@ -198,7 +198,7 @@ print(df[df['age'].isnull()])
 
 # NB: The strategy can also be 'median', 'most_frequent', or 'constant' (with a user-specified value).
 ```
-_print the dataframe after treatment_
+**1.9 print the dataframe after treatment**
 
 ```python
 df.head()
@@ -211,10 +211,10 @@ df.head()
 | Zola      | 57.000000 | Singida      |
 | Chidinma  | 54.000000 | Mtwara       |
 
-```here the firstname 'Ayaan` was null, now is replaced by mean average 41.89```
+```here, the firstname 'Ayaan' was null, now is replaced by mean average 41.89```
 | Ayaan     | 41.890397 | Unguja North |
 
-_other  treatment techniques_
+**1.10 other  treatment techniques**
 
 ```python
 # Mean imputation
@@ -228,7 +228,7 @@ df['age'].fillna(df['age'].mode()[0], inplace=True)
 
 ```
 
-_Visualize Null Fields after Treatment_
+**1.11 Visualize Null Fields after Treatment**
 ```python
 null_counts = df.isnull().sum()
 # Create bar plot figure
@@ -249,7 +249,7 @@ fig.show()
 
 # SECTION B
 
-## OUTLIERS DETECTION AND TREATMENT TECHNIQUES
+## 2. OUTLIERS DETECTION AND TREATMENT TECHNIQUES
 - Isolation Forest (Contamination)
 - Local Outlier Factor (LOF)
 - Normal Distributions and Z-scores (X ~ N(40,1))
@@ -257,9 +257,7 @@ fig.show()
 - Percentile-Based Method
 - Outliers Treatment Techniques (Winsorization)
 
-### OUTLIERS DETECTION TECHNIQUES
-
-_Detection by Normal Distribution & Z scores_
+**2.1 Detection by Normal Distribution & Z scores**
 
 ```python
 import numpy as np
@@ -343,7 +341,7 @@ fig_pdf.show()
 
 ```above figure  we have two outliers that are out or +3 Threshold to the right,  we have extreem two positive values out of range```
 
-_Detection by Box plot graph_
+**2.2 Detection by Box plot graph**
 ```python
 # Box Plot of Age
 fig_box = go.Figure()
@@ -367,7 +365,7 @@ fig_box.show()
 ```
 ![4](https://github.com/user-attachments/assets/cf6854d2-2382-4f36-8443-9d5d8cf2dc7b)
 
-_Detection by Isolation Forest_
+**2.3 Detection by Isolation Forest**
 
 ```python
 # Fit the Isolation Forest model
@@ -387,7 +385,7 @@ print(iso_outliers)
 | Adama     | 90.0  | Kagera      | -1      |
 
 
-__visualize Isolation Forest by Scatter Plot_
+**2.4 visualize Isolation Forest by Scatter Plot**
 
 ```python
 scatter_fig = px.scatter(df, x=df.index, y='age', color='anomaly',
@@ -409,7 +407,7 @@ scatter_fig.show()
 ![5](https://github.com/user-attachments/assets/894029c4-e5cc-4605-b5b1-2c07fa4559b4)
 
 
-_visualize Isolation Forest by Box Plot_
+**2.5 visualize Isolation Forest by Box Plot**
 
 ```python
 box_fig = px.box(df, x='anomaly', y='age', color='anomaly',
@@ -427,6 +425,149 @@ box_fig.update_layout(
 )
 box_fig.show()
 ```
+![6](https://github.com/user-attachments/assets/68314a7a-8558-4645-9110-922fee69993b)
+
+**2.6 Detection by Local outlier Factor LOF**
+```python
+# Fit the Local Outlier Factor (LOF) model
+lof = LocalOutlierFactor(n_neighbors=20, contamination=0.01)
+df['lof_anomaly'] = lof.fit_predict(df[['age']])
+lof_outliers = df[df['lof_anomaly'] == -1]
+```
+**2.7 Visualize LOF by Scatter Plot**
+
+```puthon
+scatter_fig_lof = px.scatter(df, x=df.index, y='age', color='lof_anomaly',
+                             color_discrete_map={1: 'blue', -1: 'red'},
+                             labels={'color': 'Anomaly'})
+
+scatter_fig_lof.update_layout(
+    title='Scatter Plot of Age with LOF Anomalies Highlighted',
+    xaxis_title='Index',
+    yaxis_title='Age',
+    showlegend=True,
+    plot_bgcolor='rgba(0,0,0,0)',  # Remove background color
+    xaxis=dict(showgrid=True, gridwidth=1, gridcolor='skyblue'),  # Add x-axis gridlines
+    yaxis=dict(showgrid=True, gridwidth=1, gridcolor='skyblue'),  # Add y-axis gridlines
+)
+scatter_fig_lof.show()
+```
+![7](https://github.com/user-attachments/assets/ef14d015-8723-4d85-8ce1-6efaabdf1aa8)
+
+**2.8 visualize LOF by Box Plot**
+
+```python
+box_fig_lof = px.box(df, x='lof_anomaly', y='age', color='lof_anomaly',
+                     color_discrete_map={1: 'blue', -1: 'red'},
+                     labels={'lof_anomaly': 'Anomaly', 'age': 'Age'})
+box_fig_lof.update_layout(
+    title='Box Plot of Age with Anomalies Highlighted',
+    xaxis_title='Anomaly',
+    yaxis_title='Age',
+    showlegend=True,
+    plot_bgcolor='rgba(0,0,0,0)',  # Remove background color
+    xaxis=dict(showgrid=True, gridwidth=1, gridcolor='skyblue'),  # Add x-axis gridlines
+    yaxis=dict(showgrid=True, gridwidth=1, gridcolor='skyblue'),  # Add y-axis gridlines
+)
+box_fig_lof.show()
+print(lof_outliers)
+```
+![8](https://github.com/user-attachments/assets/99ba95f6-b0a2-43dd-8241-3c26b8c779ee)
+
+| firstname | age  | resident    | anomaly | lof_anomaly |
+|-----------|------|-------------|---------|-------------|
+| Ayaan     | 150.0 | Pemba North | -1      | -1          |
+| Salif     | 0.0   | Iringa      | -1      | -1          |
+| Adama     | 90.0  | Kagera      | -1      | -1          |
+
+
+**2.9 Detection by Percentile Based Method**
+
+```python
+# Define thresholds for top and bottom percentiles
+top_percentile = 95
+bottom_percentile = 5
+
+# Calculate percentile values
+top_threshold = np.percentile(df['age'], top_percentile)
+bottom_threshold = np.percentile(df['age'], bottom_percentile)
+
+# Identify outliers
+percentile_outliers_top = df[df['age'] > top_threshold]
+percentile_outliers_bottom = df[df['age'] < bottom_threshold]
+```
+**2.10 print the Top Percentile Outliers**
+
+```python
+# Print outliers
+print("Top Percentile Outliers")
+print(percentile_outliers_top.head())
+```
+
+| firstname | age  | resident       | anomaly | lof_anomaly |
+|-----------|------|----------------|---------|-------------|
+| Lulu      | 64.0 | Pwani          | 1       | 1           |
+| Ifeoma    | 64.0 | Tanga          | 1       | 1           |
+| Dayo      | 65.0 | Dar es Salaam  | 1       | 1           |
+| Jelani    | 64.0 | Shinyanga      | 1       | 1           |
+| Yemi      | 65.0 | Mwanza         | 1       | 1           |
+
+
+**2.11 print the Top Bottom Percentile Outliers**
+
+```python
+print("Bottom Percentile Outliers")
+print(percentile_outliers_bottom.head())
+```
+| firstname | age  | resident    | anomaly | lof_anomaly |
+|-----------|------|-------------|---------|-------------|
+| Achieng   | 18.0 | Pemba South | 1       | 1           |
+| Gimba     | 18.0 | Katavi      | 1       | 1           |
+| Penda     | 19.0 | Manyara     | 1       | 1           |
+| Femi      | 19.0 | Songwe      | 1       | 1           |
+| Odera     | 18.0 | Mbeya       | 1       | 1           |
+
+
+# SECTION C
+
+## 3. OUTLIERS TREATMENT TECHNIQUES 
+
+**3.1 Treat by Winsorization**
+
+```python
+# Define the percentile values for Winsorization
+winsor_percentile = 5  # Set to 5th and 95th percentile for lower and upper bounds
+
+# Calculate Winsorization bounds
+lower_bound = np.percentile(df['age'], winsor_percentile)
+upper_bound = np.percentile(df['age'], 100 - winsor_percentile)
+
+# Winsorization
+df['age_winsorized'] = df['age'].clip(lower=lower_bound, upper=upper_bound)
+
+# Concatenate original and winsorized data along columns axis
+concatenated_df = pd.concat([df[['age']], df[['age_winsorized']]], axis=1)
+concatenated_df.columns = ['Original Age', 'Winsorized Age']
+
+# Display concatenated data
+print(concatenated_df)
+```
+| Original Age | Winsorized Age |
+|--------------|----------------|
+| 36.000000    | 36.000000      |
+| 41.890397    | 41.890397      |
+| 21.000000    | 21.000000      |
+| 57.000000    | 57.000000      |
+| 54.000000    | 54.000000      |
+| ...          | ...            |
+| 41.890397    | 41.890397      |
+| 45.000000    | 45.000000      |
+| 150.000000   | 63.000000      |
+| 0.000000     | 20.000000      |
+| 90.000000    | 63.000000      |
+
+
+
 
 
 
