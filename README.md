@@ -92,22 +92,21 @@ from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
 import plotly.express as px
 from sklearn.impute import SimpleImputer
-
 ```
 ### 1. NULL VALUES/COLUMNS DETECTION AND TREATMENT
-
+```Load dataset```
 ```python 
-# Load dataset
 df = pd.read_csv('datasets2.csv')
 df.tail()
 ```
-	| ID   | firstname | age   | resident       |
+| ID   | firstname | age   | resident       |
 |------|-----------|-------|----------------|
 | 995  | Adama     | NaN   | Unguja North   |
 | 996  | Kwame     | 45.0  | Morogoro       |
 | 997  | Ayaan     | 150.0 | Pemba North    |
 | 998  | Salif     | 0.0   | Iringa         |
 | 999  | Adama     | 90.0  | Kagera         |
+
 
 **1.2 FREQUENCY / PERCENT OF CLEAN AND NULL VALUES**
 
@@ -118,7 +117,6 @@ null_counts = df['age'].isnull().sum()
 clean_data_counts = df['age'].notnull().sum()
 ```
 _Calculate percentages_
-
 ```python
 total_count = len(df)
 percent_null = (null_counts / total_count) * 100
@@ -144,6 +142,7 @@ print(df_visualize)
 
 1.3 SIMPLE BAR GRAPH TO VISUALIZE NULL FIELDS
 
+```python
 # Create a bar plot figure
 fig = px.bar(df_visualize, x='Type', y='Count', text='Percentage',
              labels={'Type': 'Data Type', 'Count': 'Count', 'Percentage': 'Percentage (%)'},
@@ -160,3 +159,4 @@ fig.update_layout(
     yaxis=dict(showgrid=True, gridwidth=1, gridcolor='skyblue'),  # Add y-axis gridlines
 )
 fig.show()
+```
